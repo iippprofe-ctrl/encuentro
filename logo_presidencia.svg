@@ -1,0 +1,50 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <!-- Top arc: PRESIDENCIA DEL ESTADO -->
+    <path id="arcTop"
+      d="M 50,250 A 200,200 0 0,1 450,250"/>
+    <!-- Bottom arc: PLURINACIONAL DE BOLIVIA -->
+    <path id="arcBot"
+      d="M 68,275 A 185,185 0 0,0 432,275"/>
+  </defs>
+
+  <!-- White fill -->
+  <circle cx="250" cy="250" r="248" fill="white"/>
+
+  <!-- Outer gold ring (thick) -->
+  <circle cx="250" cy="250" r="244" fill="none" stroke="#C9A227" stroke-width="6"/>
+  <!-- Inner gold ring (thin) -->
+  <circle cx="250" cy="250" r="226" fill="none" stroke="#C9A227" stroke-width="2.5"/>
+
+  <!-- Coat of arms image centered (Bolivia Wikipedia SVG) -->
+  <image
+    href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Coat_of_arms_of_Bolivia.svg/420px-Coat_of_arms_of_Bolivia.svg.png"
+    x="90" y="82" width="320" height="320"
+    preserveAspectRatio="xMidYMid meet"
+  />
+
+  <!-- Red dots left & right -->
+  <circle cx="27"  cy="250" r="11" fill="#D32F2F"/>
+  <circle cx="473" cy="250" r="11" fill="#D32F2F"/>
+
+  <!-- Top curved text -->
+  <text
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900"
+    font-size="27"
+    fill="#1a1a1a"
+    letter-spacing="1.5">
+    <textPath href="#arcTop" startOffset="50%" text-anchor="middle">PRESIDENCIA DEL ESTADO</textPath>
+  </text>
+
+  <!-- Bottom curved text -->
+  <text
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900"
+    font-size="27"
+    fill="#1a1a1a"
+    letter-spacing="1.5">
+    <textPath href="#arcBot" startOffset="50%" text-anchor="middle">PLURINACIONAL DE BOLIVIA</textPath>
+  </text>
+</svg>

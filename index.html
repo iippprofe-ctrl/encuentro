@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#C9A227"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <title>Conversatorio – Ministerio de Educación Bolivia</title>
+  <meta name="description" content="Envía tu pregunta al Encuentro Nacional por la Transformación de la Formación de Maestros."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* =====================================================
+       RESET & VARIABLES
+    ===================================================== */
+    :root{
+      --gold:    #C9A227;
+      --gold-lt: #E2C06A;
+      --gold-dk: #9A7A10;
+      --black:   #1a1a1a;
+      --white:   #FFFFFF;
+      --bg:      #F4F2ED;
+      --g3:      #BBBBBB;
+      --g5:      #888888;
+      --g7:      #555555;
+      --radius:  14px;
+      --tr:      .25s ease;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+    body{
+      font-family:"Open Sans",sans-serif;
+      background:var(--bg);
+      color:var(--black);
+      min-height:100dvh;
+      overflow-x:hidden;
+    }
+
+    /* =====================================================
+       BACKGROUND — Palacio muy tenue (igual que la imagen)
+    ===================================================== */
+    .bg{
+      position:fixed;inset:0;z-index:0;
+      background:
+        /* capa blanca muy opaca → imagen apenas visible */
+        linear-gradient(180deg,
+          rgba(244,242,237,.93) 0%,
+          rgba(244,242,237,.85) 50%,
+          rgba(244,242,237,.97) 100%),
+        url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Palacio_de_Gobierno_Bolivia.jpg/1280px-Palacio_de_Gobierno_Bolivia.jpg")
+        center top / cover no-repeat;
+    }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+    .page{
+      position:relative;z-index:1;
+      min-height:100dvh;
+      display:flex;flex-direction:column;
+    }
+    main{
+      flex:1;
+      display:flex;flex-direction:column;align-items:center;
+      padding:2.2rem 1rem 3rem;
+    }
+
+    /* =====================================================
+       HERO HEADER — Exacto a la imagen de referencia
+    ===================================================== */
+    .hero{
+      width:100%;
+      text-align:center;
+      margin-bottom:2rem;
+      animation:fadeDown .55s ease both;
+    }
+
+    /* Sello presidencial */
+    .sello{
+      display:inline-block;
+      width:130px; height:130px;
+      margin-bottom:.8rem;
+      filter:drop-shadow(0 3px 12px rgba(0,0,0,.18));
+    }
+
+    /* "MINISTERIO" en dorado claro/medio */
+    .txt-ministerio{
+      font-family:"Montserrat",sans-serif;
+      font-size:.95rem;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--gold);
+      display:block;
+      margin-bottom:.1rem;
+    }
+
+    /* "DE EDUCACIÓN" en negro bold */
+    .txt-educacion{
+      font-family:"Montserrat",sans-serif;
+      font-size:1.5rem;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      color:var(--black);
+      display:block;
+      line-height:1;
+    }
+
+    /* =====================================================
+       SEPARADOR DORADO
+    ===================================================== */
+    .sep{
+      display:flex;align-items:center;gap:.55rem;
+      width:100%;max-width:360px;
+      margin:1.6rem auto 1.8rem;
+      animation:fadeDown .55s .05s ease both;
+    }
+    .sep .ln{flex:1;height:1.5px;
+      background:linear-gradient(to right,transparent,var(--gold),transparent);}
+    .sep .dot{
+      width:5px;height:5px;border-radius:50%;
+      background:var(--gold);flex-shrink:0;
+    }
+
+    /* =====================================================
+       TÍTULO DEL EVENTO — Bold italic dorado
+    ===================================================== */
+    .evento{
+      text-align:center;
+      margin-bottom:2rem;
+      animation:fadeDown .55s .08s ease both;
+      padding:0 .3rem;
+    }
+
+    /* "ENCUENTRO NACIONAL" — sin italic, dorado */
+    .ev-top{
+      font-family:"Montserrat",sans-serif;
+      font-size:clamp(1.35rem,5.5vw,2rem);
+      font-weight:900;
+      text-transform:uppercase;
+      color:var(--gold);
+      line-height:1.15;
+      display:block;
+      letter-spacing:.02em;
+    }
+
+    /* 'POR LA "TRANSFORMACIÓN..."' — italic bold dorado */
+    .ev-sub{
+      font-family:"Montserrat",sans-serif;
+      font-size:clamp(1.1rem,4.5vw,1.65rem);
+      font-weight:900;
+      font-style:italic;
+      text-transform:uppercase;
+      color:var(--gold);
+      line-height:1.2;
+      display:block;
+      letter-spacing:.01em;
+    }
+
+    /* =====================================================
+       TARJETA DEL FORMULARIO
+    ===================================================== */
+    .card{
+      background:rgba(255,255,255,.95);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border:1.5px solid rgba(201,162,39,.22);
+      border-radius:var(--radius);
+      box-shadow:0 14px 44px rgba(0,0,0,.13);
+      padding:1.7rem 1.2rem 2rem;
+      width:100%;max-width:460px;
+      animation:fadeUp .55s .12s ease both;
+    }
+
+    .card-title{
+      font-family:"Montserrat",sans-serif;
+      font-size:1rem;font-weight:800;
+      color:var(--black);margin-bottom:.3rem;
+    }
+    .card-sub{
+      font-size:.8rem;color:var(--g5);
+      line-height:1.5;margin-bottom:1.5rem;
+    }
+
+    /* =====================================================
+       CAMPOS
+    ===================================================== */
+    .field{margin-bottom:1.3rem;}
+
+    label{
+      display:flex;align-items:center;gap:.4rem;
+      font-size:.72rem;font-weight:700;
+      text-transform:uppercase;letter-spacing:.1em;
+      color:var(--gold-dk);margin-bottom:.45rem;
+    }
+
+    input[type="text"],textarea{
+      width:100%;
+      border:1.5px solid #E0DDD7;
+      border-radius:10px;
+      padding:.85rem .95rem;
+      font-family:"Open Sans",sans-serif;
+      font-size:1rem;         /* 16px: evita zoom iOS */
+      color:var(--black);
+      background:var(--white);
+      outline:none;
+      -webkit-appearance:none;
+      transition:border-color var(--tr),box-shadow var(--tr);
+      resize:none;
+    }
+    input[type="text"]::placeholder,
+    textarea::placeholder{color:var(--g3);}
+    input[type="text"]:focus,
+    textarea:focus{
+      border-color:var(--gold);
+      box-shadow:0 0 0 3px rgba(201,162,39,.13);
+    }
+    textarea{height:128px;line-height:1.6;}
+
+    .ctr{
+      text-align:right;font-size:.7rem;
+      color:var(--g3);margin-top:.3rem;
+      transition:color var(--tr);
+    }
+    .ctr.w{color:#E8A400;}
+    .ctr.d{color:#D94040;}
+
+    /* =====================================================
+       BOTÓN ENVIAR
+    ===================================================== */
+    .btn{
+      width:100%;padding:.95rem;min-height:52px;
+      border:none;border-radius:10px;
+      background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dk) 100%);
+      color:#fff;
+      font-family:"Montserrat",sans-serif;
+      font-size:.92rem;font-weight:800;
+      letter-spacing:.08em;text-transform:uppercase;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:.5rem;
+      box-shadow:0 4px 18px rgba(201,162,39,.38);
+      position:relative;overflow:hidden;
+      transition:transform var(--tr),box-shadow var(--tr),opacity var(--tr);
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+      margin-top:.35rem;
+    }
+    .btn::before{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 55%);
+      pointer-events:none;
+    }
+    .btn:active:not(:disabled){transform:scale(.97);}
+    .btn:disabled{opacity:.6;cursor:not-allowed;}
+
+    .sp{
+      width:19px;height:19px;
+      border:2.5px solid rgba(255,255,255,.35);
+      border-top-color:#fff;border-radius:50%;
+      animation:spin .65s linear infinite;
+      display:none;
+    }
+    .btn.busy .bt{display:none;}
+    .btn.busy .sp{display:block;}
+
+    /* =====================================================
+       ALERT DE ERROR
+    ===================================================== */
+    .alert{
+      display:none;align-items:flex-start;gap:.55rem;
+      padding:.8rem .95rem;border-radius:10px;
+      font-size:.82rem;font-weight:500;
+      margin-top:.9rem;animation:fadeIn .3s ease;
+      background:#FFF5F5;border:1.5px solid #E57373;color:#C0392B;
+    }
+    .alert.on{display:flex;}
+    .ai{font-size:1.05rem;flex-shrink:0;}
+
+    /* =====================================================
+       PANTALLA ÉXITO
+    ===================================================== */
+    .ok{
+      display:none;text-align:center;
+      padding:1rem 0;animation:fadeIn .4s ease;
+    }
+    .ok.on{display:block;}
+    .okico{
+      width:66px;height:66px;border-radius:50%;
+      background:linear-gradient(135deg,#5BBF8C,#2E9E6B);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.8rem;margin:0 auto 1rem;
+      box-shadow:0 8px 22px rgba(91,191,140,.28);
+      animation:popIn .4s ease;
+    }
+    .ok h2{
+      font-family:"Montserrat",sans-serif;
+      font-size:1.15rem;font-weight:800;
+      color:var(--black);margin-bottom:.4rem;
+    }
+    .ok p{font-size:.85rem;color:var(--g5);line-height:1.6;margin-bottom:1.3rem;}
+    .btn-new{
+      display:inline-flex;align-items:center;gap:.4rem;
+      padding:.7rem 1.4rem;min-height:46px;
+      border:2px solid var(--gold);border-radius:10px;
+      background:transparent;color:var(--gold-dk);
+      font-family:"Montserrat",sans-serif;
+      font-size:.82rem;font-weight:800;
+      text-transform:uppercase;letter-spacing:.06em;
+      cursor:pointer;
+      transition:background var(--tr),color var(--tr);
+      -webkit-tap-highlight-color:transparent;
+      touch-action:manipulation;
+    }
+    .btn-new:active{background:var(--gold);color:#fff;}
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+    footer{
+      position:relative;z-index:1;
+      text-align:center;padding:1.1rem 1rem;
+      font-size:.7rem;color:var(--g5);
+      border-top:1px solid rgba(201,162,39,.13);
+    }
+    footer strong{color:var(--gold-dk);}
+
+    /* =====================================================
+       ANIMACIONES
+    ===================================================== */
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-18px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeUp  {from{opacity:0;transform:translateY(22px); }to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn  {from{opacity:0;}to{opacity:1;}}
+    @keyframes spin    {to{transform:rotate(360deg);}}
+    @keyframes popIn   {0%{transform:scale(.4);opacity:0;}75%{transform:scale(1.08);}100%{transform:scale(1);opacity:1;}}
+
+    /* =====================================================
+       PANTALLAS GRANDES
+    ===================================================== */
+    @media(min-width:480px){
+      main{padding:2.8rem 1.5rem 4rem;}
+      .sello{width:150px;height:150px;}
+      .card{padding:2rem 2rem 2.4rem;}
+      .btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 26px rgba(201,162,39,.48);}
+      .btn-new:hover{background:var(--gold);color:#fff;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- Fondo palacio -->
+<div class="bg" aria-hidden="true"></div>
+
+<div class="page">
+  <main>
+
+    <!-- ========== HERO (logo + ministerio + titulo) ========== -->
+    <div class="hero" role="banner">
+
+      <!-- Sello presidencial -->
+      <img
+        class="sello"
+        src="logo_minedu.png"
+        alt="Presidencia del Estado Plurinacional de Bolivia – Ministerio de Educación"
+        width="130" height="130"
+      />
+
+      <!-- MINISTERIO -->
+      <span class="txt-ministerio">Ministerio</span>
+      <!-- DE EDUCACIÓN -->
+      <span class="txt-educacion">de Educación</span>
+    </div>
+
+    <!-- ========== SEPARADOR ========== -->
+    <div class="sep" aria-hidden="true">
+      <div class="ln"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="ln"></div>
+    </div>
+
+    <!-- ========== TÍTULO DEL EVENTO ========== -->
+    <div class="evento" aria-label="Nombre del evento">
+      <span class="ev-top">Encuentro Nacional</span>
+      <span class="ev-sub">Por la &ldquo;Transformación de la<br/>Formación de Maestros&rdquo;</span>
+    </div>
+
+    <!-- ========== FORMULARIO ========== -->
+    <section class="card" aria-labelledby="ftitle">
+
+      <!-- Vista formulario -->
+      <div id="fv">
+        <h1 class="card-title" id="ftitle">📩 Envía tu pregunta</h1>
+        <p class="card-sub">Completa los campos. Tu pregunta será considerada por los panelistas.</p>
+
+        <form id="frm" novalidate>
+
+          <div class="field">
+            <label for="nom">👤 Nombre completo</label>
+            <input
+              type="text" id="nom" name="nombre"
+              placeholder="Ej. María Elena Flores Quispe"
+              maxlength="80" autocomplete="name"
+              inputmode="text" required
+            />
+          </div>
+
+          <div class="field">
+            <label for="preg">❓ Tu pregunta</label>
+            <textarea
+              id="preg" name="pregunta"
+              placeholder="Escribe aquí tu pregunta para los panelistas…"
+              maxlength="500" required
+            ></textarea>
+            <div class="ctr" id="ctr">0 / 500</div>
+          </div>
+
+          <div class="alert" id="errBox" role="alert" aria-live="assertive">
+            <span class="ai">⚠️</span>
+            <span id="errTxt">Completa todos los campos antes de enviar.</span>
+          </div>
+
+          <button type="submit" class="btn" id="btnSend">
+            <span class="bt">✉️&nbsp; Enviar pregunta</span>
+            <div class="sp" aria-hidden="true"></div>
+          </button>
+
+        </form>
+      </div>
+
+      <!-- Vista éxito -->
+      <div class="ok" id="sv" role="status" aria-live="polite">
+        <div class="okico" aria-hidden="true">✓</div>
+        <h2>¡Pregunta recibida!</h2>
+        <p>Gracias por tu participación.<br/>Tu pregunta fue registrada y será considerada por los panelistas.</p>
+        <button class="btn-new" onclick="doReset()">➕ Enviar otra pregunta</button>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <strong>Ministerio de Educación</strong> · Estado Plurinacional de Bolivia · 2026
+  </footer>
+</div>
+
+<script>
+  /* ===========================================================
+     ⚙️  CONFIGURACIÓN — Pega aquí tu Web App URL de Google
+         Ver instrucciones: google-sheets-setup.md
+  =========================================================== */
+  const SCRIPT_URL = 'PEGA_AQUI_TU_WEB_APP_URL';
+
+  /* — Contador de caracteres — */
+  const ta  = document.getElementById('preg');
+  const ctr = document.getElementById('ctr');
+  ta.addEventListener('input', () => {
+    const n = ta.value.length;
+    ctr.textContent = `${n} / 500`;
+    ctr.className = 'ctr' + (n > 450 ? ' d' : n > 380 ? ' w' : '');
+  });
+
+  /* — Submit — */
+  const frm    = document.getElementById('frm');
+  const btn    = document.getElementById('btnSend');
+  const errBox = document.getElementById('errBox');
+  const errTxt = document.getElementById('errTxt');
+  const fv     = document.getElementById('fv');
+  const sv     = document.getElementById('sv');
+
+  const showErr  = m  => { errTxt.textContent = m; errBox.classList.add('on'); };
+  const clearErr = () => errBox.classList.remove('on');
+  const setBusy  = v  => { btn.disabled = v; btn.classList.toggle('busy', v); };
+
+  frm.addEventListener('submit', async e => {
+    e.preventDefault(); clearErr();
+    const name = document.getElementById('nom').value.trim();
+    const q    = ta.value.trim();
+
+    if (!name) { showErr('Por favor, ingresa tu nombre completo.'); document.getElementById('nom').focus(); return; }
+    if (!q)    { showErr('Por favor, escribe tu pregunta antes de enviar.');  ta.focus(); return; }
+
+    if (SCRIPT_URL === 'PEGA_AQUI_TU_WEB_APP_URL') {
+      showErr('⚙️ Configuración pendiente: pega tu URL de Google Apps Script. Ver google-sheets-setup.md');
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const fd = new FormData();
+      fd.append('nombre',   name);
+      fd.append('pregunta', q);
+      fd.append('fecha',    new Date().toLocaleString('es-BO', { timeZone: 'America/La_Paz' }));
+      await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: fd });
+      setBusy(false);
+      fv.style.display = 'none';
+      sv.classList.add('on');
+    } catch(ex) {
+      setBusy(false);
+      showErr('Error de conexión. Verifica tu internet e intenta de nuevo.');
+      console.error(ex);
+    }
+  });
+
+  function doReset() {
+    frm.reset();
+    ctr.textContent = '0 / 500'; ctr.className = 'ctr';
+    clearErr();
+    sv.classList.remove('on');
+    fv.style.display = '';
+  }
+</script>
+</body>
+</html>

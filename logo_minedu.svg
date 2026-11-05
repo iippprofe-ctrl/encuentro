@@ -1,0 +1,39 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <clipPath id="circClip">
+      <circle cx="250" cy="250" r="225"/>
+    </clipPath>
+    <!-- Path for top curved text -->
+    <path id="topArc" d="M 55,250 A 195,195 0 0,1 445,250" fill="none"/>
+    <!-- Path for bottom curved text -->
+    <path id="botArc" d="M 70,270 A 185,185 0 0,0 430,270" fill="none"/>
+  </defs>
+
+  <!-- White background circle -->
+  <circle cx="250" cy="250" r="248" fill="white"/>
+
+  <!-- Outer gold ring -->
+  <circle cx="250" cy="250" r="245" fill="none" stroke="#C9A227" stroke-width="6"/>
+  <!-- Inner gold ring -->
+  <circle cx="250" cy="250" r="225" fill="none" stroke="#C9A227" stroke-width="3"/>
+
+  <!-- Coat of arms image centered -->
+  <image href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Coat_of_arms_of_Bolivia.svg/300px-Coat_of_arms_of_Bolivia.svg.png"
+    x="85" y="85" width="330" height="330" clip-path="url(#circClip)"/>
+
+  <!-- Red dots left and right -->
+  <circle cx="30" cy="250" r="10" fill="#D32F2F"/>
+  <circle cx="470" cy="250" r="10" fill="#D32F2F"/>
+
+  <!-- Top curved text: ESTADO PLURINACIONAL DE BOLIVIA -->
+  <path id="topTextPath" d="M 62,250 A 188,188 0 0,1 438,250" fill="none"/>
+  <text font-family="'Arial Black', Helvetica, sans-serif" font-weight="900" font-size="28" fill="#1a1a1a" letter-spacing="2">
+    <textPath href="#topTextPath" startOffset="50%" text-anchor="middle">ESTADO PLURINACIONAL DE BOLIVIA</textPath>
+  </text>
+
+  <!-- Bottom curved text: MINISTERIO DE EDUCACIÓN -->
+  <path id="botTextPath" d="M 75,268 A 182,182 0 0,0 425,268" fill="none"/>
+  <text font-family="'Arial Black', Helvetica, sans-serif" font-weight="900" font-size="28" fill="#1a1a1a" letter-spacing="2">
+    <textPath href="#botTextPath" startOffset="50%" text-anchor="middle">MINISTERIO DE EDUCACIÓN</textPath>
+  </text>
+</svg>
